@@ -99,7 +99,8 @@ span.ripple {
 
 .lobby-grid {
     display: grid;
-    grid-template-rows: 40vh 15vh 15vh 20vh;
+    grid-template-rows: 200px 100px 100px 100px;
+    margin-top: 5vh;
 }
 
 .input {
@@ -360,6 +361,72 @@ room h4 {
 
 .select-face {
     bottom: 0;
+}
+
+.canvas-container {
+    background-color: white;
+    margin: auto;
+    height: 100vh;
+    width: 50vh;
+    position: relative;
+}
+
+.canvas-toolbar {
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar-top {
+    display: flex;
+    width: 100%;
+    font-size: 30px;
+    justify-content: center;
+    padding: 0 0 .5em;
+}
+
+.toolbar-bottom {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 40px;
+    padding: .5em 0;
+}
+
+.toolbar-bottom i {
+    font-size: 40px;
+}
+
+.color-picker {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    background-color: #333;
+    color: #eef;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+}
+
+.color-picker i {
+    font-size: 40px;
+}
+
+.timer {
+    border: solid 4px #eef;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width:480px) {
+    .select-container,
+    .selects {
+        width: 100%;
+    }
 }
 
 @keyframes ripple {

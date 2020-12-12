@@ -1,11 +1,19 @@
+var isDevMode = true;
+var isMobile = window.innerWidth <= 480;
+var isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 var socket = io();
+
 var HATS = [];
 var FACES = [];
 
-var gameStates = ['home', 'lobby', 'room', 'draw', 'wait'];
-socket.gameState = 'home';
+var gameStates = ['install', 'home', 'lobby', 'room', 'draw', 'wait'];
+socket.gameState = 'install';
 
 var generatedSelects = false;
+
+if (isPWA || isDevMode || !isMobile) {  
+    socket.gameState = 'draw';
+}
 
 //////////////////////////////////////////
 // Functions
@@ -62,6 +70,14 @@ function updateRoom(data) {
             centerPadding: '0',
             prevArrow:"<i class='material-icons text-light a-left control-c prev slick-prev'>keyboard_arrow_left</i>",
             nextArrow:"<i class='material-icons text-light a-right control-c next slick-next'>keyboard_arrow_right</i>",
+            responsive: [
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                    }
+                }
+            ]
         });
     }
 

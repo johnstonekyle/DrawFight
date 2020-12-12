@@ -1,0 +1,20 @@
+{
+    "name": "drawfight",
+    "short_name": "drawfight",
+    "start_url": ".",
+    "background_color": "#4879AF",
+    "theme_color": "#456990",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "img/logo192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "img/logo512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]   
+}
