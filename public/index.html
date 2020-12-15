@@ -94,42 +94,7 @@
         <draw>
             <div class="row h-vh bg-dark">
                 <div class="col">
-                    <script type="text/paperscript" canvas="sheet">
-                        var path;
-                        var currentColor = "#000000";
-
-                        function changeColor(color) {
-                            currentColor = color;
-                        }
-                
-                        function onMouseDown(event) {
-                            // If we produced a path before, deselect it:
-                            if (path) {
-                                path.selected = false;
-                            }
-                
-                            // Create a new path and set its stroke color to black:
-                            path = new Path({
-                                segments: [event.point],
-                                strokeColor: currentColor,
-                                strokeWidth: 10,
-                                strokeCap: 'round'
-                            });
-                        }
-                       
-                        // While the user drags the mouse, points are added to the path
-                        // at the position of the mouse:
-                        function onMouseDrag(event) {
-                            path.add(event.point);
-                        }
-                
-                        // When the mouse is released, we simplify the path:
-                        function onMouseUp(event) {
-                            path.simplify(5);
-                            var svg = decodeURI(project.exportSVG({asString: true}));
-                            document.getElementById("output").innerHTML = svg;
-                        }
-                    </script>
+                    <script type="text/paperscript" canvas="sheet" src="js/canvas.js"></script>
                     
                     <div class="canvas-container">
                         <div class="canvas-toolbar bg-blue text-light">
@@ -141,10 +106,29 @@
                             <div class="toolbar-top">Master of Looking Cool</div>
                         </div>
                         <canvas id="sheet" width="400" height="800"></canvas>
-                        <button class="color-picker btn">
+                        <button class="color-picker btn" id="btn-color-picker">
                             <i class="material-icons">brush</i>
                         </button>
+
+                        <div class="color-container" style="display: none;" id="display-color-container">
+                            <div id="color-black" class="color-btn active" style="background-color: #111111;"></div>
+                            <div id="color-grey" class="color-btn" style="background-color: #999999;"></div>
+                            <div id="color-white" class="color-btn" style="background-color: #ffffff;"></div>
+                            <div id="color-pink" class="color-btn" style="background-color: #fdb7dd;"></div>
+                            <div id="color-red" class="color-btn" style="background-color: #F45B69;"></div>
+                            <div id="color-brown" class="color-btn" style="background-color: #654320;"></div>
+                            <div id="color-orange" class="color-btn" style="background-color: #fb7f03;"></div>
+                            <div id="color-yellow" class="color-btn" style="background-color: #f3e370;"></div>
+                            <div id="color-green" class="color-btn" style="background-color: #62AD71;"></div>
+                            <div id="color-lightblue" class="color-btn" style="background-color: #acd3f4;"></div>
+                            <div id="color-blue" class="color-btn" style="background-color: #4879AF;"></div>
+                            <div id="color-purple" class="color-btn" style="background-color: #785cb4;"></div>
+
+
+                        </div>
                     </div>
+
+                    
                     
                     <!-- <button id="black">Black</button>
                     <button id="red">Red</button>

@@ -1,18 +1,27 @@
-var isDevMode = true;
-var isMobile = window.innerWidth <= 480;
-var isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+const isDevMode = true;
+const isMobile = window.innerWidth <= 480;
+const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 var socket = io();
 
 var HATS = [];
 var FACES = [];
 
-var gameStates = ['install', 'home', 'lobby', 'room', 'draw', 'wait'];
-socket.gameState = 'install';
+const gameStates = {
+    INSTALL: 'install',
+    HOME: 'home',
+    LOBBY: 'lobby',
+    ROOM: 'room',
+    DRAW: 'draw',
+    WAIT: 'wait'
+}
+const initialGameState = gameStates.INSTALL;
+const nextGameState = gameStates.DRAW;
+socket.gameState = initialGameState;
 
-var generatedSelects = false;
+let generatedSelects = false;
 
 if (isPWA || isDevMode || !isMobile) {  
-    socket.gameState = 'draw';
+    socket.gameState = nextGameState;
 }
 
 //////////////////////////////////////////
@@ -39,7 +48,7 @@ function createRipple(event) {
 }
 
 function changeGameState(state) {
-    gameStates.forEach(gs => {
+    Object.values(gameStates).forEach(gs => {
         if (gs !== state) $(gs).hide();
     });
     $(state).show();
@@ -59,7 +68,7 @@ function updateRoom(data) {
     socket.room = data.id;
     changeGameState(socket.gameState);
 
-    if (socket.gameState === 'lobby') {
+    if (socket.gameState === gameStates.LOBBY) {
         $('.selects').not('.slick-initialized').slick({
             infinite: true,
             slidesToShow: 3,
@@ -81,7 +90,7 @@ function updateRoom(data) {
         });
     }
 
-    if (socket.gameState === 'room') {
+    if (socket.gameState === gameStates.ROOM) {
         $('#display-room').html(data.id);
 
         var html = '';
@@ -118,10 +127,14 @@ function generateAvatarSelector() {
 // Sending
 //////////////////////////////////////////
 
+$('#btn-color-picker').on('click', () => {
+    $('#display-color-container').toggle();
+});
+
 $('#btn-save').on('click', () => {
     var svg = document.getElementById("output").innerHTML;
     socket.emit('server.svg.save', svg);
-    socket.gameState = 'wait';
+    socket.gameState = gameStates.WAIT;
 });
 
 $('#btn-ready').on('click', () => {
@@ -130,7 +143,7 @@ $('#btn-ready').on('click', () => {
 
 $('#btn-go').on('click', event => {
     createRipple(event);
-    socket.gameState = 'lobby';
+    socket.gameState = gameStates.LOBBY;
 });
 
 $('#btn-join').on('click', event => {
@@ -148,7 +161,7 @@ $('#btn-join').on('click', event => {
         socket.emit('server.nickname', nickname);
         socket.emit('server.avatar', avatar);
         socket.emit('server.room.join', roomId);
-        socket.gameState = 'room';
+        socket.gameState = gameStates.ROOM;
     }
 });
 
@@ -177,7 +190,7 @@ socket.on('client.room.update', data => {
 });
 
 socket.on('client.ready', () => {
-    socket.gameState = 'draw';
+    socket.gameState = gameStates.DRAW;
 });
 
 socket.on("client.sock.update", client => {

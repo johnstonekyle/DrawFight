@@ -422,6 +422,39 @@ room h4 {
     justify-content: center;
 }
 
+.color-container {
+    position: absolute;
+    background-color: #333333;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: space-between;
+    width: calc(100% - 6em);
+    height: calc(100% - 165px - 15em);
+    top: calc(165px + 8em);
+    left: 3em;
+    border-radius: 2em;
+}
+
+.color-btn {
+    margin: auto;
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.color-btn.active::after {
+    content: '';
+    position: absolute;
+    width: 81px;
+    height: 81px;
+    left: -8px;
+    top: -8px;
+    border: 3px solid #444;
+    border-radius: 50%;
+}
+
 @media only screen and (max-width:480px) {
     .select-container,
     .selects {
