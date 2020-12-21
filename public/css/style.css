@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
 
 :root {
     --green: #62AD71;
-    --blue: #456990;
+    --blue: #4879AF;
     --red: #F45B69;
-    --light-blue: #4879AF;
     --dark-blue: #3e5a77;
+
+    --smoke: #FCFFE4;
 }
 
 * {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Gochi Hand', cursive;
 }
 
 html,
@@ -41,6 +43,10 @@ h3 {
 
 .bg-blue {
     background-color: var(--blue);
+}
+
+.bg-smoke {
+    background-color: var(--smoke);
 }
 
 .bg-red {
@@ -95,6 +101,21 @@ span.ripple {
 
 .logo span {
     font-size: .75em;
+}
+
+.left-squiggle, .right-squiggle {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: auto;
+}
+
+.left-squiggle {
+    left: 0;
+}
+
+.right-squiggle {
+    right: 0;
 }
 
 .lobby-grid {
@@ -155,7 +176,7 @@ span.ripple {
 }
 
 .btn-lobby {
-    background-color: var(--light-blue) !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
     border: none !important;
     font-weight: 600;
     padding: .5em 4em;
@@ -189,7 +210,7 @@ span.ripple {
 }
 
 .btn-leave {
-    background-color: var(--light-blue) !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
     border: none !important;
     font-weight: 600;
     border-radius: 50%;
@@ -213,7 +234,7 @@ span.ripple {
 }
 
 .btn-ready {
-    background-color: var(--light-blue) !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
     border: none !important;
     font-weight: 600;
     border-radius: 100vw;
@@ -322,15 +343,15 @@ room h4 {
 }
 
 .selects .items {
-    width: 100px;
-    height: auto;
+    width: auto;
+    height: 100px;
     outline: none!important;
 }
 
 .selects .items img {
     margin: auto;
-    width: 100px;
-    height: auto;
+    width: auto;
+    height: 100px;
     transition: all .3s;
     opacity: .3;
     transform: scale(.6);
@@ -377,23 +398,14 @@ room h4 {
 }
 
 .toolbar-top {
-    display: flex;
+    display: block;
     width: 100%;
-    font-size: 30px;
-    justify-content: center;
-    padding: 0 0 .5em;
-}
-
-.toolbar-bottom {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    font-size: 40px;
-    padding: .5em 0;
-}
-
-.toolbar-bottom i {
-    font-size: 40px;
+    font-size: 20px;
+    padding: .5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
 .color-picker {
@@ -403,16 +415,26 @@ room h4 {
     background-color: #333;
     color: #eef;
     border-radius: 50%;
-    width: 65px;
-    height: 65px;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .color-picker i {
     font-size: 40px;
 }
 
+.canvas-bottom {
+    position: relative;
+    height: calc(100% - 50px);
+}
+
 .timer {
-    border: solid 4px #eef;
+    border: solid 4px #5DFF7D;
+    color: #333333;
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
     width: 65px;
     height: 65px;
@@ -420,20 +442,22 @@ room h4 {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    font-weight: bold;
+    top: 1em;
+    left: 1em;
 }
 
 .color-container {
     position: absolute;
-    background-color: #333333;
+    background-color: rgba(51, 51, 51, .3);
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
-    width: calc(100% - 6em);
-    height: calc(100% - 165px - 15em);
-    top: calc(165px + 8em);
-    left: 3em;
-    border-radius: 2em;
+    width: 100%;
+    height: 400px;
+    bottom: 70px;
 }
 
 .color-btn {
@@ -442,6 +466,7 @@ room h4 {
     width: 65px;
     border-radius: 50%;
     position: relative;
+    cursor: pointer;
 }
 
 .color-btn.active::after {
@@ -453,6 +478,30 @@ room h4 {
     top: -8px;
     border: 3px solid #444;
     border-radius: 50%;
+}
+
+#btn-save {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    background-color: #5DFF7D;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#btn-save i {
+    font-size: 35px;
+}
+
+@media only screen and (max-width:1080px) {
+    .left-squiggle,
+    .right-squiggle {
+        display: none;
+    }
 }
 
 @media only screen and (max-width:480px) {

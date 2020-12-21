@@ -11,8 +11,8 @@ var DEFAULT_ROOM = 'lobby';
 // temp data storage
 //////////////////////////////////////////
 var ROOMS = [];
-var FACES = ['001-anxious', '002-crying', '003-dizzy', '004-expressionless', '005-blow kiss', '006-full', '008-vomiting', '009-laughing', '010-rolling eyes', '011-angry', '012-laughing', '013-flushed', '014-grinning', '015-grinning', '016-grinning', '017-hug', '018-crying', '019-angry', '020-sleeping', '022-smiling face', '023-smirking', '024-tongue out', '025-thinking', '026-tired', '027-unamused', '028-winking face', '029-winking face', '030-zipped'];
-var HATS = ['001-cap', '002-beanie', '004-top-hat', '008-hat-1', '009-mexican-hat', '011-witch-hat', '012-winter-hat', '017-winter-hat-2', '018-beret', '024-pilgrim', '029-wizard', '030-police-hat', '040-pirate-hat'];
+var FACES = ['yellow', 'blue', 'green', 'lightblue', 'orange', 'pink', 'purple', 'red', 'white'];
+var HATS = ['none', 'beanie', 'fedora', 'nurse', 'pirate', 'sailor', 'tophat', 'witch', 'wizard'];
 var GAME_STATES = ['room', 'round-one', 'round-two'];
 
 class Avatar {
@@ -56,7 +56,7 @@ io.on('connection', socket => {
 
     socket.score = 0;
     socket.nickname = '';
-    socket.avatar = new Avatar('001-cap','001-anxious');
+    socket.avatar = new Avatar('none','yellow');
     socket.svgs = [];
     socket.ready = false;
 

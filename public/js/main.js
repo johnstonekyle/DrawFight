@@ -15,7 +15,7 @@ const gameStates = {
     WAIT: 'wait'
 }
 const initialGameState = gameStates.INSTALL;
-const nextGameState = gameStates.DRAW;
+const nextGameState = gameStates.HOME;
 socket.gameState = initialGameState;
 
 let generatedSelects = false;
@@ -24,9 +24,27 @@ if (isPWA || isDevMode || !isMobile) {
     socket.gameState = nextGameState;
 }
 
+scaleCanvas();
+
 //////////////////////////////////////////
 // Functions
 //////////////////////////////////////////
+
+function scaleCanvas() {
+    const c = $('#sheet');
+    const ctx = c[0].getContext('2d');
+    const container = $('.canvas-container').first();
+    const toolbarHeight = 50;
+    console.log(toolbarHeight);
+    if(window.innerWidth <= 480) {
+        ctx.canvas.width = window.innerWidth;
+        container.width(window.innerWidth);
+    } else {
+        ctx.canvas.width = Math.round(window.innerHeight / 2);
+        container.width(window.innerHeight / 2);
+    }
+    ctx.canvas.height = window.innerHeight - toolbarHeight;
+}
 
 function createRipple(event) {
     var button = event.currentTarget;
@@ -127,6 +145,14 @@ function generateAvatarSelector() {
 // Sending
 //////////////////////////////////////////
 
+$(window).resize(() => {
+    scaleCanvas();
+})
+
+$('.color-btn').on('click', () => {
+    $('#display-color-container').toggle();
+})
+
 $('#btn-color-picker').on('click', () => {
     $('#display-color-container').toggle();
 });
@@ -191,6 +217,7 @@ socket.on('client.room.update', data => {
 
 socket.on('client.ready', () => {
     socket.gameState = gameStates.DRAW;
+    scaleCanvas();
 });
 
 socket.on("client.sock.update", client => {

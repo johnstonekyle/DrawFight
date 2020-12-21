@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="103.177" height="100" viewBox="0 0 103.177 100">
+  <g id="nurse" transform="translate(2.513 24.409)">
+    <rect id="Rectangle_52" data-name="Rectangle 52" width="100" height="100" transform="translate(-1 -24.409)" fill="none"/>
+    <path id="Path_113" data-name="Path 113" d="M87.947,161.273H10.2A5.155,5.155,0,0,1,5.1,157.1L.075,130.025a5.111,5.111,0,0,1,5.1-5.987H92.972a5.11,5.11,0,0,1,5.1,5.987L93.046,157.1a5.155,5.155,0,0,1-5.1,4.169Zm0,0" transform="translate(0 -99.889)" fill="#eef" stroke="#333" stroke-width="5"/>
+    <path id="Path_115" data-name="Path 115" d="M48.806.453h57.546a13.541,13.541,0,0,1,13.54,13.54V24.149H35.266V13.993A13.541,13.541,0,0,1,48.806.453Zm0,0" transform="translate(-28.505)" fill="#dddde9" stroke="#333" stroke-width="5"/>
+    <path id="Path_118" data-name="Path 118" d="M197.18,177.6a3.385,3.385,0,0,1-3.385-3.385v-5.078h-5.078a3.385,3.385,0,0,1-3.385-3.384v-3.385a3.386,3.386,0,0,1,3.385-3.385H193.8v-5.077a3.385,3.385,0,0,1,3.385-3.385h3.385a3.386,3.386,0,0,1,3.385,3.385v5.077h5.078a3.385,3.385,0,0,1,3.385,3.385v3.385a3.384,3.384,0,0,1-3.385,3.384H203.95v5.078a3.386,3.386,0,0,1-3.385,3.385Zm0,0" transform="translate(-149.798 -121.297)" fill="#f45b69" stroke="#333" stroke-width="3"/>
+  </g>
+</svg>

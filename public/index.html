@@ -12,6 +12,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="img/logo192.png">
     <script type='text/javascript' src='http://paperjs.org/assets/js/paper.js'></script>
+    <script src="https://kit.fontawesome.com/3346ad4e0b.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container-full">
@@ -47,11 +48,11 @@
                     </div>
                     <div class="input m-auto">
                         <input type="text" id="input-nickname" placeholder="."/>
-                        <label for="input-nickname">Enter Nickname</label>
+                        <label for="input-nickname">Nickname...</label>
                     </div>
                     <div class="input m-auto">
                         <input type="text" id="input-roomcode" placeholder="."/>
-                        <label for="input-roomcode">Enter Room Code</label>
+                        <label for="input-roomcode">Room Code...</label>
                     </div>
                     <button class="btn btn-primary btn-lobby m-auto btn-ripple" id="btn-join">
                         Join
@@ -59,6 +60,8 @@
                     </button>
                 </div>        
             </div>
+            <img class="left-squiggle" src="img/left-squiggle.svg" alt="">
+            <img class="right-squiggle" src="img/right-squiggle.svg" alt="">
         </lobby>
         
         <room>
@@ -93,23 +96,24 @@
 
         <draw>
             <div class="row h-vh bg-dark">
-                <div class="col">
+                <div class="col p-0">
                     <script type="text/paperscript" canvas="sheet" src="js/canvas.js"></script>
                     
                     <div class="canvas-container">
                         <div class="canvas-toolbar bg-blue text-light">
-                            <div class="toolbar-bottom">
-                                <button class="btn"><i class="material-icons text-light">undo</i></button>
-                                <div class="timer">90</div>
-                                <button id="btn-save" class="btn"><i class="material-icons text-light">done</i></button>
-                            </div>
                             <div class="toolbar-top">Master of Looking Cool</div>
                         </div>
-                        <canvas id="sheet" width="400" height="800"></canvas>
-                        <button class="color-picker btn" id="btn-color-picker">
-                            <i class="material-icons">brush</i>
-                        </button>
-
+                        <div class="canvas-bottom">
+                            <canvas id="sheet" width="400" height="800"></canvas>
+                            <div class="timer">90</div>
+                            <button id="btn-save" class="btn">
+                                <i class="fas fa-check text-success"></i>
+                            </button>
+                            <button class="color-picker btn" id="btn-color-picker">
+                                <i class="material-icons">brush</i>
+                            </button>
+                        </div>
+                        
                         <div class="color-container" style="display: none;" id="display-color-container">
                             <div id="color-black" class="color-btn active" style="background-color: #111111;"></div>
                             <div id="color-grey" class="color-btn" style="background-color: #999999;"></div>
