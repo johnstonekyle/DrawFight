@@ -13,6 +13,7 @@ var DEFAULT_ROOM = 'lobby';
 var ROOMS = [];
 var FACES = ['yellow', 'blue', 'green', 'lightblue', 'orange', 'pink', 'purple', 'red', 'white'];
 var HATS = ['none', 'beanie', 'fedora', 'nurse', 'pirate', 'sailor', 'tophat', 'witch', 'wizard'];
+var CATEGORIES = ['Looking Cool', 'The Swamp', 'Social Cues'];
 var GAME_STATES = ['room', 'round-one', 'round-two'];
 
 class Avatar {
@@ -31,7 +32,7 @@ class Room {
 }
 
 class Sock {
-    constructor (id, score, nickname, avatar, svgs, ready, room) {
+    constructor (id, score, nickname, avatar, svgs, ready, room, categories, category) {
         this.id = id;
         this.score = score;
         this.nickname = nickname;
@@ -39,6 +40,8 @@ class Sock {
         this.svgs = svgs;
         this.ready = ready;
         this.room = room;
+        this.categories = categories;
+        this.category = category;
     }
 }
 
@@ -59,6 +62,8 @@ io.on('connection', socket => {
     socket.avatar = new Avatar('none','yellow');
     socket.svgs = [];
     socket.ready = false;
+    socket.categories = [];
+    socket.category = "";
 
     //set room
     socket.rooms.forEach(room => {
@@ -113,9 +118,41 @@ io.on('connection', socket => {
         var clients = [];
         clientIds.forEach( socketId => {
             var socket = io.sockets.sockets.get(socketId);
-            clients.push(new Sock(socket.id, socket.score, socket.nickname, socket.avatar, socket.svgs, socket.ready, socket.room));
+            clients.push(new Sock(socket.id, socket.score, socket.nickname, socket.avatar, socket.svgs, socket.ready, socket.room, socket.categories, socket.category));
         });
         return clients;
+    }
+
+    //get actual socket from socket id
+    function getSocket(socketId) {
+        return io.sockets.sockets.get(socketId);
+    }
+
+    //changes the game state to the next round, chooses categories
+    function nextRound() {
+        //block entry to room
+
+        if(getStoredRoom().state === 'round-one') {
+            getStoredRoom().state = 'round-two';
+
+        } else {
+            console.log('next round');
+            getStoredRoom().state = 'round-one';
+            var cats = [];
+            while (cats.length < getStoredRoom().clients.length && CATEGORIES.length >= getStoredRoom().clients.length) {
+                console.log("cats length", cats.length);
+                console.log("clients length", getStoredRoom().clients.length);
+                var cat = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
+                if(!cats.includes(cat)) {
+                    cats.push(cat);
+                    console.log('add cat', cat);
+                }
+            }
+
+            getStoredRoom().clients.forEach( (sock, index) => {
+                getSocket(sock.id).emit("client.categories.init", {categories: cats, category: cats[index]});
+            })
+        }
     }
 
     //////////////////////////////////////////
@@ -175,11 +212,16 @@ io.on('connection', socket => {
     socket.on('server.ready', () => {
         socket.ready = true;
         if(isRoomReady()) {
-            getStoredRoom().state = 'round-one';
+            nextRound();
             io.to(socket.room).emit('client.ready');
             setReadyStateForRoom(false);
         }
     });
+
+    socket.on("server.categories.init", data => {
+        socket.category = data.category;
+        socket.categories = data.categories;
+    })
 
     socket.on('server.svg.save', svg => {
         socket.svgs.push(svg);
@@ -224,7 +266,7 @@ setInterval(function(){
         var clients = [];
         clientIds.forEach( socketId => {
             var socket = io.sockets.sockets.get(socketId);
-            var client = new Sock(socket.id, socket.score, socket.nickname, socket.avatar, socket.svgs, socket.ready, socket.room);
+            var client = new Sock(socket.id, socket.score, socket.nickname, socket.avatar, socket.svgs, socket.ready, socket.room, socket.categories, socket.category);
             clients.push(client);
             socket.emit("client.sock.update", client);
         });

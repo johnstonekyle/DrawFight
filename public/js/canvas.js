@@ -31,9 +31,11 @@ function onMouseDrag(event) {
 
 // When the mouse is released, we simplify the path:
 function onMouseUp(event) {
-    console.log(currentColor);
     if(currentColor !== "#ffffff"){
         path.simplify(30);
+    }
+    if(path.segments.length === 1) {
+        path.add(event.point);
     }
     var svg = decodeURI(project.exportSVG({asString: true}));
     document.getElementById("output").innerHTML = svg;

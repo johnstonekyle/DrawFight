@@ -149,8 +149,21 @@ $(window).resize(() => {
     scaleCanvas();
 })
 
-$('.color-btn').on('click', () => {
+$('.color-btn').on('click', (event) => {
     $('#display-color-container').toggle();
+    $(".color-btn").removeClass("active");
+    event.target.classList.add("active");
+    const color = event.target.style.backgroundColor;
+    $('.color-picker').css('background-color', color);
+    const rgb = color.substring(4, color.length-1).replace(/ /g, '').split(',');
+    const lum = (0.2126*rgb[0] + 0.7152*rgb[1] + 0.0722*rgb[2]);
+    if (lum > 150) { 
+        $('.color-picker i').css('color', "#333") 
+        $('.color-picker').css('border', "solid 2px #CCC")
+    } else {
+        $('.color-picker i').css('color', "#FFF");
+        $('.color-picker').css('border', "solid 2px #FFF")
+    }
 })
 
 $('#btn-color-picker').on('click', () => {
@@ -223,3 +236,8 @@ socket.on('client.ready', () => {
 socket.on("client.sock.update", client => {
     updateClient(client);
 });
+
+socket.on("client.categories.init", data => {
+    console.log(data);
+    socket.emit("server.categories.init", data);
+})
